@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<!-- 
+  JavaScriptでは//とするとその行は実行時に無視される
+ -->
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>JavaScript Practice</title>
+    <style>
+
+      body {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      /* 
+      #8、divを増やす
+      divを横並びにするために、divの親要素であるbodyに対してdisplay: flexをつける
+      要素が増えてきた時に折り返して表示するためのflex-wrap: wrap;をつける
+       */
+
+
+      .box {
+        width: 100px;
+        height: 100px;
+        background-color: skyblue;
+        cursor: pointer;
+        transition: 0.8s;
+        margin: 0 8px 8px 0;
+        text-align: center;
+        line-height: 100px;
+        /* text-alignは横を中央に揃えた
+           line-heightをdivと同じ100pxにすることで上下を中央に*/
+      }
+
+      .circle {
+        background: pink;
+        border-radius: 50%;
+        transform: rotate(360deg);
+      }
+
+
+
+      .win {
+        background: pink;
+        border-radius: 50%;
+        transform: rotate(360deg);
+      }
+      .lose {
+        transform: scale(0.9);
+        /* 少しだけ小さくするためにtransform: scale()を書いた */
+      }
+      
+
+
+
+
+    </style>
+  </head>
+  <body>
+    <!-- <div class="box" id="target1"></div>
+    <div class="box" id="target2"></div>
+    <div class="box" id="target3"></div> -->
+
+    <script>
+      'use strict';
+
+      // const target1 = document.getElementById('target1')
+      // const target2 = document.getElementById('target2')
+      // const target3 = document.getElementById('target3')
+
+      // document.getElementById('target').addEventListener('click', () => {
+      //   // document.getElementById('target').style.background = 'pink';
+      //   // document.getElementById('target').style.borderRadius = '50%';
+      //   // document.getElementById('target').classList.add('circle')
+      //   document.getElementById('target').classList.toggle('circle');
+      // });
+
+
+      // target1.addEventListener('click', () => {
+      //   target1.classList.toggle('circle');
+      // });
+      // target2.addEventListener('click', () => {
+      //   target2.classList.toggle('circle');
+      // });
+      // target3.addEventListener('click', () => {
+      //   target3.classList.toggle('circle');
+      // });
+      
+
+      // #３、クリックイベント
+      // scriptタグは全てのHTMLの要素を読み込んでから操作したいのでbodyタグの閉じタグの直前に置く
+      // use scriptというキーワードを入れてあげるとブラウザが厳密なエラーチェックをしてくれる（エラーがあったときに見つけやすい）
+      // また、JavaScriptから要素を指定したいときはidをつけておくと便利
+      // ここからはtargetという要素に対して処理をする
+      // document.getElementById('target')でdocumentは文章全体のことで指定したid要素を持つものを文章全体から取得するという意味
+      // addEventListener()という命令は何かの命令が起こったら何かの処理をするという意味
+      // targetがクリックされた時に次の処理をするという意味
+      // target要素の背景を変えたいので再びtarget要素を書き、スタイルを変えたいので、.style.backgroundとする
+      // また、複数命令を書くこともできる
+      // ()=>{}これをアロー関数という
+
+      // #6、CSSのクラス、アニメーション
+      // circleクラスをtargetに追加することもできる
+      // classList.add('circle')を書いてあげれば追加できる
+      // transitionプロパティはアニメーションにかける時間、これはアニメーションが起こる前のスタイルに書く
+      // transformプロパティをrotate(360deg)にすると回転のアニメーションがつく
+
+      // #7、定数、toggleの使い方
+      // toggleという命令はtargetにクラスがなかったらつける、付いてたら外すという処理をしてくれる
+      // 定数を使えば長いコードを短い文字で指定できる
+      // また、プログラムを変更したいときに定数を変えれば良い
+       
+
+
+      // const div = document.createElement('div');
+      // div.classList.add('box');
+      // div.addEventListener('click', () => {
+      //   div.classList.toggle('circle');
+      // });
+      // document.body.appendChild(div);
+      // #9、JavaScriptでdivを作成
+      // まず、div要素を作るにはdocument.createElement('div')を書く
+      // 次は、divにboxクラスをつける
+      // 次はクリックしたらどうするかを書いていく
+
+
+
+      // for (let i = 0; i < 10; i++) {
+      //   const div = document.createElement('div');
+      //   div.classList.add('box');
+      //   div.textContent = i;
+      //   div.addEventListener('click', () => {
+      //     div.classList.toggle('circle');
+      //   });
+      //   document.body.appendChild(div);
+      // }
+      // #10、for文
+      // i=0はiが0から始まるという意味で、i<10はiが10より小さい間はという意味で、i++はiに1を追加していくという意味
+      // div.textContent = i;はdivにテキストコンテントとしてi、つまり０〜９までを左上詰めで入力する
+      // document.body.appendChild(div)はブラウザに表示するために必要で、bodyの子要素として追加するという処理
+
+
+
+
+      const num = 5;
+      const winner = Math.floor(Math.random() * num);
+      for (let i = 0; i < num; i++) {
+        const div = document.createElement('div');
+        div.classList.add('box');
+        div.addEventListener('click', () => {
+          if (i === winner) {
+            div.textContent = 'Win!';
+            div.classList.add('win');
+          } else {
+            div.textContent = 'Lose!';
+            div.classList.add('lose');
+          }
+        });
+        document.body.appendChild(div);
+      }
+      // #11、簡単なゲーム（宝探し）作成
+      // Math.random()は０以上１未満のランダムな数値を生成しそれにnum（５）をかけることによって、０位上５未満のランダムな数値が生成され、Math.floor()で小数点以下を切り捨てた
+      // if (i === winner)でもしiがwinnerと同じ値だったらWinと表示し、winというクラスをつける
+      // また、elseで値が違う場合をloseとして処理していく
+
+
+
+
+
+
+
+
+    </script>
+  </body>
+</html>
+
+<!-- 
+  ＃５、コードの間違えがある場合
+  googleのメニュー -> その他のツール -> デベロッパーツールのconsolにどこが間違えているか教えてくれる
+ -->
